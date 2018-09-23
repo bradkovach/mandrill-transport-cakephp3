@@ -11,7 +11,7 @@ use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Email;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
-use Cake\Network\Http\Client;
+use Cake\Http\Client;
 use Cake\Network\Exception\SocketException;
 
 
@@ -73,9 +73,9 @@ class MandrillTransport extends AbstractTransport {
     $request['message'] += $this->_to($email);
     $request['message'] += $this->_attachments($email);
 
-    if (!empty($email->subject()))
+    if (!empty($email->getSubject()))
     {
-      $request['message']['subject'] = $email->subject();
+      $request['message']['subject'] = $email->getSubject();
     }
 
     foreach (['merge_language','inline_css','subaccount'] as $key) {
@@ -128,8 +128,8 @@ class MandrillTransport extends AbstractTransport {
   protected function _from(Email $email)
   {
     return [
-      'from_email' => key($email->from()),
-      'from_name' => current($email->from())
+      'from_email' => key($email->getFrom()),
+      'from_name' => current($email->getFrom())
     ];
   }
 
@@ -139,8 +139,12 @@ class MandrillTransport extends AbstractTransport {
    */
   protected function _to(Email $email)
   {
-    foreach (['to', 'cc', 'bcc'] as $type) {
-        foreach ($email->{$type}() as $mail => $name) {
+    foreach ([
+      'getTo' => 'to', 
+      'getCc' => 'cc',
+      'getBcc' => 'bcc'
+    ] as $functionName => $type) {
+        foreach ($email->{$functionName}() as $mail => $name) {
             $to['to'][] = [
                 'email' => $mail,
                 'name'  => $name,
@@ -157,8 +161,12 @@ class MandrillTransport extends AbstractTransport {
    */
   protected function _attachments(Email $email) {
     $message = [];
-    foreach ($email->attachments() as $filename => $file) {
-      $content = base64_encode(file_get_contents($file['file']));
+    foreach ($email->getAttachments() as $filename => $file) {
+      if (isset($file['data']) ) {
+        $content = base64_encode($file['data']);
+      } else {
+        $content = base64_encode(file_get_contents($file['file']));
+      }
       if (isset($file['contentId'])) {
         $message['images'][] = [
           'type'    => $file['mimetype'],
