@@ -1,5 +1,9 @@
 # MandrillTransport plugin for CakePHP 3+
 
+## Purpose
+
+This is a fork of the CakePHP library that fixes some of the deprecation notices that you may receive with `DaoAndCo/mandrill-transport-cakephp3`.  It also fixes the attachments api, so that you don't need to use files to send attachments.
+
 ## Installation
 
 You can install this plugin into your CakePHP application using [composer](http://getcomposer.org).
@@ -7,16 +11,22 @@ You can install this plugin into your CakePHP application using [composer](http:
 The recommended way to install composer packages is:
 
 ```
-composer require orken/mandrill-transport-cakephp3
+composer require bradkovach/mandrill-transport-cakephp3
 ```
 
 ## Setting up your CakePHP application
-In your bootstrap.php
 
-```
+### CakePHP 3.0 - 3.5: In your bootstrap.php
+
+```php
 Plugin::load('MandrillTransport');
 ```
 
+### CakePHP 3.6+: In Application.php
+
+```php
+$this->addPlugin('MandrillTransport');
+```
 
 In your app.php file.
 

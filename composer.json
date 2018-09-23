@@ -1,7 +1,7 @@
 {
-    "name": "orken/mandrill-transport-cakephp3",
-    "description": "MandrillTransport plugin for CakePHP 3+",
-    "homepage": "https://github.com/Orken/mandrill-transport-cakephp3",
+    "name": "bradkovach/mandrill-transport-cakephp3",
+    "description": "MandrillTransport plugin for CakePHP 3.6+",
+    "homepage": "https://github.com/bradkovach/mandrill-transport-cakephp3",
     "keywords": ["cakephp", "mandrill","email"],
     "type": "cakephp-plugin",
     "license": "MIT",
@@ -10,6 +10,11 @@
             "name": "orken",
             "email": "subotm@free.fr",
             "homepage": "http://lbc2rss.superfetatoire.com/"
+        },
+        {
+            "name": "Brad Kovach",
+            "email": "bradkovach@gmail.com",
+            "homepage": "https://bradkovach.com"
         }
     ],
     "require": {
