@@ -9,6 +9,7 @@ namespace MandrillTransport\Mailer\Transport;
 
 use Cake\Core\Configure;
 use Cake\Http\Client;
+use Cake\Log\LogTrait;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Email;
 use Cake\Network\Exception\SocketException;
@@ -17,6 +18,7 @@ use InvalidArgumentException;
 
 class MandrillTransport extends AbstractTransport
 {
+    use LogTrait;
 
     public $transportConfig = [
         'host' => 'mandrillapp.com',
@@ -165,10 +167,11 @@ class MandrillTransport extends AbstractTransport
                 if (!isset($file['data'])) {
                     throw new InvalidArgumentException("No file or data specified, " . $filename);
                 }
-                $content = base64_encode($file['data']);
+                $content = $file['data'];
             } else {
-                $content = base64_encode(file_get_contents($file['file']));
+                $content = file_get_contents($file['file']);
             }
+            
             if (isset($file['contentId'])) {
                 $message['images'][] = [
                     'type' => $file['mimetype'],
