@@ -96,8 +96,8 @@ class MandrillTransport extends AbstractTransport {
       $request['message']['tags'] = [$email->viewVars['template_name']];
       $response = $this->_send($email,'send-template',$request);
     } else {
-      $request['message']['html'] = $email->message(\Cake\Network\Email\Email::MESSAGE_HTML);
-      $request['message']['text'] = $email->message(\Cake\Network\Email\Email::MESSAGE_TEXT);
+      $request['message']['html'] = $email->message(\Cake\Mailer\Email::MESSAGE_HTML);
+      $request['message']['text'] = $email->message(\Cake\Mailer\Email::MESSAGE_TEXT);
       $response = $this->_send($email,'send',$request);
     }
     if (!$response) {
