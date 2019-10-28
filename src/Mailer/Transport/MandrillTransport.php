@@ -103,7 +103,7 @@ class MandrillTransport extends AbstractTransport
         if (!$response) {
             throw new SocketException($response->code);
         }
-        return $response->json;
+        return $response->getJson();
     }
 
     /**
